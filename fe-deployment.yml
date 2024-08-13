@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lms-fe
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: lms-fe
+  template:
+    metadata:
+      labels:
+        app: lms-fe
+    spec:
+      containers:
+        - name: frontend-container
+          image: acrreglms.azurecr.io/feimage
+          imagePullPolicy: Always
+          env:
+          - name: VITE_API_URL
+            value: http://lms-be-service:3000/api  # Use the backend service name here
+          ports:
+          - containerPort: 80
